@@ -1,4 +1,18 @@
 <div class="chart-wrapper">
+    <div class="chart-sidebar">
+        <h4>Chart config</h4>
+        <label for="">
+            <p>Type</p>
+            <select name="type" id="">
+                <option value="line">Line</option>
+                <option value="bar">Bar</option>
+            </select>
+        </label>
+        <label for="">
+            <p>Resolution</p>
+            <input type="number" name="resolution" id="">
+        </label>
+    </div>
     <canvas baseChart [type]="'line'" [data]="lineChartData" [options]="lineChartOptions" [legend]="lineChartLegend">
     </canvas>
 </div>

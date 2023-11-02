@@ -28,6 +28,17 @@ export class ChartComponent implements OnInit {
 
   public lineChartOptions: ChartOptions<'line'> = {
     responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: '#eee', // not 'fontColor:' anymore
+          // fontSize: 18  // not 'fontSize:' anymore
+          font: {
+            size: 12, // 'size' now within object 'font {}'
+          },
+        },
+      },
+    },
     scales: {
       x: {
         type: 'time',
@@ -35,9 +46,11 @@ export class ChartComponent implements OnInit {
           unit: 'minute',
           tooltipFormat: 'MMMM yyyy',
         },
+        ticks: { color: '#ddd' },
       },
       y: {
         beginAtZero: false,
+        ticks: { color: '#ddd' },
       },
     },
   };
@@ -54,7 +67,7 @@ export class ChartComponent implements OnInit {
       // Update the chart data with the fetched data
       this.lineChartData.datasets[0].data = chartData;
       this.lineChartData.labels = data.map((item: any) => new Date(item.timestamp)).slice(-this.resolution);
-      this.lineChartData.datasets[0].label = this.dataType;
+      this.lineChartData.datasets[0].label = this.dataType.toUpperCase();
       this.lineChartData.datasets[0].backgroundColor = 'rgba(' + this.color + ',0.3)';
       this.lineChartData.datasets[0].borderColor = 'rgba(' + this.color + ',0.4)';
 
