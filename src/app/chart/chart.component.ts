@@ -50,11 +50,11 @@ export class ChartComponent implements OnInit {
           unit: 'minute',
           tooltipFormat: 'MMMM yyyy',
         },
-        ticks: { color: '#ddd' },
+        ticks: { color: '#424242' },
       },
       y: {
         beginAtZero: false,
-        ticks: { color: '#ddd' },
+        ticks: { color: '#424242' },
       },
     },
   };
@@ -81,8 +81,8 @@ export class ChartComponent implements OnInit {
       this.lineChartData.datasets[0].data = chartData;
       this.lineChartData.labels = data.map((item: any) => new Date(item.timestamp)).slice(-this.resolution);
       this.lineChartData.datasets[0].label = this.dataType.toUpperCase();
-      this.lineChartData.datasets[0].backgroundColor = 'rgba(' + this.color + ',0.4)';
-      this.lineChartData.datasets[0].borderColor = 'rgba(' + this.color + ',0.5)';
+      this.lineChartData.datasets[0].backgroundColor = 'rgba(' + this.color + ', 0.4)';
+      this.lineChartData.datasets[0].borderColor = 'rgba(' + this.color + ', 0.5)';
 
       console.log(Math.max(...chartData));
       this.lineChartOptions.scales.y.min = Math.min(...chartData) * 0.99;

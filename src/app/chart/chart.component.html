@@ -10,7 +10,7 @@
         </label>
         <label for="">
             <p>Resolution</p>
-            <input type="number" name="resolution" id="" formControlName="resolution">
+            <input type="number" name="resolution" id="" formControlName="resolution" min="1" max="+dataStore.length">
         </label>
     </form>
     <canvas baseChart [type]="chartType" [data]="lineChartData" [options]="lineChartOptions" [legend]="lineChartLegend">
