@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
@@ -17,7 +17,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { RecipePlaceholderComponent } from './recipes/recipe-placeholder/recipe-placeholder.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ChartComponent } from './chart/chart/chart.component';
+import { ChartComponent } from './chart/chart.component';
+import { ChartsComponent } from './charts/charts.component';
 
 const appRoutes: Routes = [
   {
@@ -34,6 +35,10 @@ const appRoutes: Routes = [
     path: 'shopping-list',
     component: ShoppingListComponent,
   },
+  {
+    path: 'charts',
+    component: ChartsComponent,
+  },
 ];
 
 @NgModule({
@@ -49,6 +54,7 @@ const appRoutes: Routes = [
     DropdownDirective,
     RecipePlaceholderComponent,
     ChartComponent,
+    ChartsComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +62,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
     NgChartsModule,
+    ReactiveFormsModule,
   ],
   providers: [ShoppingListService],
   bootstrap: [AppComponent],

@@ -10,10 +10,7 @@ import { ShoppingListService } from '../services/shopping-list.service';
   providers: [ShoppingListComponent],
 })
 export class ShoppingListComponent implements OnInit, OnChanges {
-  ingredients: Ingredient[] = [
-    new Ingredient('Apples', 5, 'pcs'),
-    new Ingredient('Tomatoes', 10, 'pcs'),
-  ];
+  ingredients: Ingredient[] = [new Ingredient('Apples', 5, 'pcs'), new Ingredient('Tomatoes', 10, 'pcs')];
   editMode: boolean = false;
 
   constructor(private shoppingListService: ShoppingListService) {}
@@ -28,9 +25,12 @@ export class ShoppingListComponent implements OnInit, OnChanges {
     console.log(this.shoppingListService.editMode);
   }
 
+  onEditItem(index: number) {
+    this.shoppingListService.startedEditing.next(index);
+  }
+
   enableEditMode = () => {
     this.editMode = true;
-    console.log('enableEditMode SLC');
   };
 
   closeEditMode = () => (this.editMode = false);

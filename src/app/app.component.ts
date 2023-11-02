@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { DataService } from './services/data.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
