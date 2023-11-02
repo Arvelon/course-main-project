@@ -1,0 +1,41 @@
+<div class="shopping-list-edit">
+  <div class="col-xs-12">
+    <form>
+      <div class="row close-button-row">
+        <h3>Add items to shopping list</h3>
+        <button class="close-button" (click)="closeEditMode()">
+          x
+        </button>
+      </div>
+      <div class="row">
+        <div class="col-sm-5 form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            #nameInput>
+        </div>
+        <div class="col-sm-2 form-group">
+          <label for="amount">Amount</label>
+          <input
+            type="number"
+            id="amount"
+            class="form-control"
+            #amountInput>
+        </div>
+        <div class="col-sm-2 form-group">
+          <label for="amount">Unit</label>
+          <input type="text" id="amount" class="form-control" #unitInput>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 button-row">
+          <button class="btn btn-success" type="submit" (click)="onAddItem()">Add</button>
+          <button class="btn btn-danger" type="button">Delete</button>
+          <button class="btn btn-primary" type="button">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

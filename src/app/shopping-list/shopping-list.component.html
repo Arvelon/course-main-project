@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-xs-10">
+    <button (click)="enableEditMode()">Edit mode</button>
+    <app-shopping-edit *ngIf="editMode" (triggerClose)="closeEditMode()"></app-shopping-edit>
+    <hr>
+    <ul class="list-group">
+      <a
+        class="list-group-item"
+        style="cursor: pointer"
+        *ngFor="let ingredient of ingredients"
+      >
+        {{ ingredient.name }} ({{ ingredient.amount }}{{ingredient.unit}})
+      </a>
+    </ul>
+  </div>
+</div>

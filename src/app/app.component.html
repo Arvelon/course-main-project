@@ -1,0 +1,12 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- <app-recipes></app-recipes>
+      <app-shopping-list></app-shopping-list> -->
+      <router-outlet></router-outlet>
+      <app-chart [dataType]="'temperature'" resolution="35" color="255, 0, 0"></app-chart>
+      <app-chart [dataType]="'humidity'" resolution="35" color="0, 0, 255"></app-chart>
+    </div>
+  </div>
+</div>
