@@ -19,6 +19,8 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { HttpClientModule } from '@angular/common/http';
 import { ChartComponent } from './chart/chart.component';
 import { ChartsComponent } from './charts/charts.component';
+import { CdkDragDropSortingExample } from './cdk-drag-drop-sorting-example/cdk-drag-drop-sorting-example.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const appRoutes: Routes = [
   {
@@ -55,6 +57,8 @@ const appRoutes: Routes = [
     RecipePlaceholderComponent,
     ChartComponent,
     ChartsComponent,
+    RecipeEditComponent,
+    CdkDragDropSortingExample,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +67,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     NgChartsModule,
     ReactiveFormsModule,
+    DragDropModule,
   ],
   providers: [ShoppingListService],
   bootstrap: [AppComponent],

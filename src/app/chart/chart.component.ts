@@ -36,7 +36,7 @@ export class ChartComponent implements OnInit {
     plugins: {
       legend: {
         labels: {
-          color: '#eee',
+          color: '#212121',
           font: {
             size: 12,
           },
