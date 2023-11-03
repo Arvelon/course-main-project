@@ -22,7 +22,6 @@ export class ShoppingListComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.editMode = this.shoppingListService.editMode;
-    console.log(this.shoppingListService.editMode);
   }
 
   onEditItem(index: number) {

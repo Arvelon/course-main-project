@@ -1,5 +1,5 @@
 <div class="chart-wrapper">
-    <form class="chart-sidebar" [formGroup]="config">
+    <form class="chart-sidebar chart-config" [formGroup]="config">
         <h4>Chart config</h4>
         <label for="">
             <p>Type</p>
@@ -15,4 +15,16 @@
     </form>
     <canvas baseChart [type]="chartType" [data]="lineChartData" [options]="lineChartOptions" [legend]="lineChartLegend">
     </canvas>
+    <div class="chart-sidebar data-list" cdkDropList (cdkDropListDropped)="drop($event)">
+        <h4>Data points</h4>
+        <div class="data-point">
+            <span>Timestamp</span>
+            <strong>Temperature °C</strong>
+        </div>
+        <div [ngClass]="{'first': i===0 }" class="data-point" *ngFor="let dataPoint of fullDataStore; let i = index"
+            cdkDrag>
+            <span>{{dataPoint.dateTime}}</span>
+            <strong>{{dataPoint[dataType]}}</strong>
+        </div>
+    </div>
 </div>

@@ -3,6 +3,8 @@ import { ChartConfiguration, ChartOptions, ChartType } from 'chart.js';
 import { HttpClient } from '@angular/common/http'; // Import HttpClient for making HTTP requests
 import 'chartjs-adapter-date-fns';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { format } from 'date-fns';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-chart',
@@ -11,12 +13,13 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class ChartComponent implements OnInit {
   @Input() resolution: number = 20;
-  @Input() dataType: string;
-  @Input() color: string;
+  @Input() dataType: string = '';
+  @Input() color: string = '';
   chartType: ChartType = 'line';
   config: FormGroup;
   dataStore: any[];
   labelStore: any[];
+  fullDataStore: any[];
 
   public lineChartData: ChartConfiguration<ChartType>['data'] = {
     labels: [],
@@ -73,6 +76,13 @@ export class ChartComponent implements OnInit {
     this.http.get('https://next-home-control.vercel.app/api/' + this.dataType).subscribe((data: any) => {
       // Assuming your data is an array of objects with date and value properties
 
+      this.fullDataStore = data.slice(-this.resolution);
+      this.fullDataStore = this.fullDataStore.map((data) => {
+        const d = { ...data };
+        d.dateTime = format(new Date(d.timestamp), 'dd-MM HH:mm');
+        return d;
+      });
+
       this.dataStore = data.map((item: any) => +item[this.dataType]);
       this.labelStore = data.map((item: any) => new Date(item.timestamp));
       const chartData = this.dataStore.slice(-this.resolution);
@@ -84,7 +94,6 @@ export class ChartComponent implements OnInit {
       this.lineChartData.datasets[0].backgroundColor = 'rgba(' + this.color + ', 0.4)';
       this.lineChartData.datasets[0].borderColor = 'rgba(' + this.color + ', 0.5)';
 
-      console.log(Math.max(...chartData));
       this.lineChartOptions.scales.y.min = Math.min(...chartData) * 0.99;
       this.lineChartOptions.scales.y.max = Math.max(...chartData) * 1.01;
 
@@ -94,6 +103,8 @@ export class ChartComponent implements OnInit {
   }
 
   updateChart() {
+    this.dataStore = this.fullDataStore.map((item: any) => +item[this.dataType]);
+    this.labelStore = this.fullDataStore.map((item: any) => new Date(item.timestamp));
     const chartData = this.dataStore.slice(-this.resolution);
 
     // Update the chart data with the fetched data
@@ -103,22 +114,23 @@ export class ChartComponent implements OnInit {
     this.lineChartData.datasets[0].backgroundColor = 'rgba(' + this.color + ',0.3)';
     this.lineChartData.datasets[0].borderColor = 'rgba(' + this.color + ',0.4)';
 
-    console.log(Math.max(...chartData));
     this.lineChartOptions.scales.y.min = Math.min(...chartData) * 0.99;
     this.lineChartOptions.scales.y.max = Math.max(...chartData) * 1.01;
 
     // Trigger chart update
     this.lineChartData = { ...this.lineChartData };
-    console.log(this.dataStore);
-    console.log(this.labelStore);
   }
 
   onChanges(): void {
     this.config.valueChanges.subscribe((val) => {
-      console.log(this.config);
       this.resolution = this.config.controls.resolution.value;
       this.chartType = this.config.controls.type.value;
       this.updateChart();
     });
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.fullDataStore, event.previousIndex, event.currentIndex);
+    this.updateChart();
   }
 }

@@ -3,7 +3,7 @@
         <form [formGroup]="recipeForm">
             <div class="row">
                 <div class="col-xs-12">
-                    <button type="submit" class="btn btn-success margin-r-xl">Save</button>
+                    <button type="submit" class="btn btn-success margin-r-xl" (click)="onSave()">Save</button>
                     <button type="button" class="btn btn-danger">Cancel</button>
                 </div>
             </div>
@@ -11,7 +11,7 @@
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="name"></label>
-                        <input type="text" name="name" id="name" class="form-control">
+                        <input type="text" name="name" id="name" class="form-control" formControlName="name">
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="image"></label>
-                        <input type="text" name="image" id="image" class="form-control">
+                        <input type="text" name="image" id="image" class="form-control" formControlName="imagePath">
                     </div>
                 </div>
             </div>
@@ -32,21 +32,33 @@
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="description"></label>
-                        <textarea type="text" name="description" id="description" class="form-control"></textarea>
+                        <textarea type="text" name="description" id="description" class="form-control"
+                            formControlName="description"></textarea>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-12" formArrayName="ingredients">
+                    <div class="row" *ngFor="let ingredientCtrl of recipeForm.get('ingredients').value; let i = index"
+                        [formGroupName]="i">
+                        <div class="col-xs-6">
+                            <input type="text" name="ingredient" id="name" class="form-control" formControlName="name">
+                        </div>
+                        <div class="col-xs-2">
+                            <input type="number" name="amount" id="amount" class="form-control"
+                                formControlName="amount">
+                        </div>
+                        <div class="col-xs-2">
+                            <input type="text" name="unit" id="unit" class="form-control" formControlName="unit">
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-danger">X</button>
+                        </div>
+                        &nbsp;
+                    </div>
                     <div class="row">
-                        <div class="col-xs-8">
-                            <input type="text" name="ingredient" id="" class="form-conrol">
-                        </div>
-                        <div class="col-xs-2">
-                            <input type="number" name="amount" id="" class="form-control">
-                        </div>
-                        <div class="col-xs-2">
-                            <button class="button bg-red-500 btn-danger">X</button>
+                        <div class="col-xs-12">
+                            <button class="btn btn-success" (click)="onAddIngredient()">Add ingredient</button>
                         </div>
                     </div>
                 </div>

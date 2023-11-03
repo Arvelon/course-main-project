@@ -17,25 +17,24 @@ export class RecipesService {
       'Another Test Recipe',
       'This is simply a test',
       'https://upload.wikimedia.org/wikipedia/commons/1/15/Recipe_logo.jpeg',
-      [
-        new Ingredient('Parmesan cheese', 30, 'g'),
-        new Ingredient('Ricotta', 250, 'g'),
-      ]
+      [new Ingredient('Parmesan cheese', 30, 'g'), new Ingredient('Ricotta', 250, 'g')]
     ),
   ];
   selectedRecipe = new Subject<Recipe>();
+  updatedRecipes = new Subject<Recipe[]>();
 
   constructor() {}
 
+  updateRecipe = (index: number, newRecipe: Recipe) => {
+    this.recipes[index] = newRecipe;
+    this.updatedRecipes.next(this.recipes.slice());
+  };
+
   getRecipes = () => {
-    console.log(this.recipes);
     return [...this.recipes];
   };
 
   getRecipe = (id) => {
-    console.log(id);
-    console.log(this.recipes.find((recipe) => recipe.id === id));
-    console.log(this.recipes);
     return this.recipes.find((recipe) => recipe.id === id);
   };
 }

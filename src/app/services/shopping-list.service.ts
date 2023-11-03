@@ -10,7 +10,6 @@ export class ShoppingListService {
   constructor() {}
 
   addToShoppingList = (ingsToAdd: Ingredient[]) => {
-    console.log(ingsToAdd);
     this.ingredients.push(...ingsToAdd);
   };
 

@@ -21,8 +21,8 @@ export class AppComponent {
 
       const duration = 30600000;
 
-      target.setHours(17);
-      target.setMinutes(0);
+      target.setHours(16);
+      target.setMinutes(30);
 
       const nowUNIX = now.getTime();
       const targetUNIX = target.getTime();
