@@ -1,5 +1,5 @@
 import { Recipe } from '../recipes/recipe.model';
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, OnInit } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { Subject } from 'rxjs';
 
@@ -23,7 +23,9 @@ export class RecipesService {
   selectedRecipe = new Subject<Recipe>();
   updatedRecipes = new Subject<Recipe[]>();
 
-  constructor() {}
+  constructor() {
+    this.load();
+  }
 
   addRecipe(recipe: Recipe) {
     console.log(recipe);
@@ -31,11 +33,13 @@ export class RecipesService {
     console.log(recipeWithID);
     this.recipes.push(recipeWithID);
     this.updatedRecipes.next(this.recipes.slice());
+    this.save();
   }
 
   updateRecipe = (index: number, newRecipe: Recipe) => {
-    this.recipes[this.recipes.findIndex((r) => r.id === index)] = newRecipe;
+    this.recipes[this.recipes.findIndex((r) => r.id === index)] = { ...newRecipe, id: index };
     this.updatedRecipes.next(this.recipes.slice());
+    this.save();
   };
 
   getRecipes = () => {
@@ -46,5 +50,23 @@ export class RecipesService {
     console.log(id);
     console.log(this.recipes);
     return this.recipes.find((recipe) => recipe.id === id);
+  };
+
+  deleteRecipe = (id) => {
+    this.recipes.splice(
+      this.recipes.findIndex((recipe) => recipe.id === id),
+      1
+    );
+    this.updatedRecipes.next(this.recipes.slice());
+    this.save();
+  };
+
+  save = () => localStorage.setItem('recipes', JSON.stringify(this.recipes));
+  load = () => {
+    const lsString = localStorage.getItem('recipes');
+    if (!lsString) return;
+    const json = JSON.parse(lsString);
+    this.recipes = json;
+    console.log(json);
   };
 }
