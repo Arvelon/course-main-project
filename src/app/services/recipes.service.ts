@@ -61,6 +61,13 @@ export class RecipesService {
     this.save();
   };
 
+  deleteIngredient = (id: number, index: number) => {
+    this.recipes[this.recipes.findIndex((recipe) => recipe.id === id)].ingredients.splice(index, 1);
+    console.log(this.recipes);
+    this.updatedRecipes.next(this.recipes.slice());
+    this.save();
+  };
+
   save = () => localStorage.setItem('recipes', JSON.stringify(this.recipes));
   load = () => {
     const lsString = localStorage.getItem('recipes');
