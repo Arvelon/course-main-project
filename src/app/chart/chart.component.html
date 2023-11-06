@@ -16,7 +16,7 @@
     <canvas baseChart [type]="chartType" [data]="lineChartData" [options]="lineChartOptions" [legend]="lineChartLegend">
     </canvas>
     <div class="chart-sidebar data-list" cdkDropList (cdkDropListDropped)="drop($event)">
-        <h4>Data points</h4>
+        <h4>Data points ({{cacheOrLive}})</h4>
         <div class="data-point">
             <span>Timestamp</span>
             <strong>Temperature °C</strong>

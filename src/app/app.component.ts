@@ -21,8 +21,8 @@ export class AppComponent {
 
       const duration = 30600000;
 
-      target.setHours(16);
-      target.setMinutes(30);
+      target.setHours(17);
+      target.setMinutes(10);
 
       const nowUNIX = now.getTime();
       const targetUNIX = target.getTime();
@@ -36,16 +36,14 @@ export class AppComponent {
         const minutes = Math.floor((diff / 1000 / 60) % 60);
 
         format =
-          (Math.floor(hours).toString().length === 1
-            ? '0' + Math.floor(hours).toString()
-            : Math.floor(hours).toString()) +
-          ':' +
-          (Math.floor(minutes).toString().length === 1
-            ? '0' + Math.floor(minutes).toString()
-            : Math.floor(minutes).toString()) +
-          ' (%€ ' +
-          (100 - (diff / duration) * 100).toFixed(2) +
-          ')';
+          // (Math.floor(hours).toString().length === 1
+          //   ? '0' + Math.floor(hours).toString()
+          //   : Math.floor(hours).toString()) +
+          // ':' +
+          // (Math.floor(minutes).toString().length === 1
+          //   ? '0' + Math.floor(minutes).toString()
+          //   : Math.floor(minutes).toString()) +
+          ' (' + (100 - (diff / duration) * 100).toFixed(2) + '%)';
       } else {
         format = 'Done!';
       }

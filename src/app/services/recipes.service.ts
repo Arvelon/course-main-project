@@ -25,8 +25,16 @@ export class RecipesService {
 
   constructor() {}
 
+  addRecipe(recipe: Recipe) {
+    console.log(recipe);
+    const recipeWithID = { ...recipe, id: this.recipes.length + 1 };
+    console.log(recipeWithID);
+    this.recipes.push(recipeWithID);
+    this.updatedRecipes.next(this.recipes.slice());
+  }
+
   updateRecipe = (index: number, newRecipe: Recipe) => {
-    this.recipes[index] = newRecipe;
+    this.recipes[this.recipes.findIndex((r) => r.id === index)] = newRecipe;
     this.updatedRecipes.next(this.recipes.slice());
   };
 
@@ -35,6 +43,8 @@ export class RecipesService {
   };
 
   getRecipe = (id) => {
+    console.log(id);
+    console.log(this.recipes);
     return this.recipes.find((recipe) => recipe.id === id);
   };
 }
