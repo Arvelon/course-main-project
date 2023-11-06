@@ -87,10 +87,9 @@ export class ChartComponent implements OnInit {
       this.cacheOrLive = 'realtime';
       console.log('Cache is outdated, requesting new data...');
       // In case the last datapoint is older than 5 min ago, do the request
+
       // Make an HTTP request to fetch your data
       this.http.get('https://next-home-control.vercel.app/api/' + this.dataType).subscribe((data: any) => {
-        // Assuming your data is an array of objects with date and value properties
-
         this.fullDataStore = data.slice(-this.resolution);
         this.fullDataStore = this.fullDataStore.map((data) => {
           const d = { ...data };
@@ -135,6 +134,7 @@ export class ChartComponent implements OnInit {
 
   updateChart() {
     console.log('Updating chart...');
+    console.log('Configuration: ', this.chartType, this.resolution);
     this.dataStore = this.fullDataStore.map((item: any) => +item[this.dataType]);
     this.labelStore = this.fullDataStore.map((item: any) => new Date(item.timestamp));
     const chartData = this.dataStore.slice(-this.resolution);
@@ -155,6 +155,7 @@ export class ChartComponent implements OnInit {
   }
 
   onChanges(): void {
+    console.log('onChanges');
     this.config.valueChanges.subscribe((val) => {
       this.resolution = this.config.controls.resolution.value;
       this.chartType = this.config.controls.type.value;

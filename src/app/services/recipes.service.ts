@@ -1,5 +1,4 @@
 import { Recipe } from '../recipes/recipe.model';
-import { EventEmitter, OnInit } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { Subject } from 'rxjs';
 
@@ -28,9 +27,7 @@ export class RecipesService {
   }
 
   addRecipe(recipe: Recipe) {
-    console.log(recipe);
     const recipeWithID = { ...recipe, id: this.recipes.length + 1 };
-    console.log(recipeWithID);
     this.recipes.push(recipeWithID);
     this.updatedRecipes.next(this.recipes.slice());
     this.save();
@@ -47,8 +44,6 @@ export class RecipesService {
   };
 
   getRecipe = (id) => {
-    console.log(id);
-    console.log(this.recipes);
     return this.recipes.find((recipe) => recipe.id === id);
   };
 
@@ -63,7 +58,6 @@ export class RecipesService {
 
   deleteIngredient = (id: number, index: number) => {
     this.recipes[this.recipes.findIndex((recipe) => recipe.id === id)].ingredients.splice(index, 1);
-    console.log(this.recipes);
     this.updatedRecipes.next(this.recipes.slice());
     this.save();
   };
@@ -74,6 +68,5 @@ export class RecipesService {
     if (!lsString) return;
     const json = JSON.parse(lsString);
     this.recipes = json;
-    console.log(json);
   };
 }

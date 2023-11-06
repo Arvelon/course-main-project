@@ -23,6 +23,7 @@ import { CdkDragDropSortingExample } from './cdk-drag-drop-sorting-example/cdk-d
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RecipesService } from './services/recipes.service';
 import { StrlenPipe } from './strlen.pipe';
+import { RedTextDirective } from './red-text.directive';
 
 const appRoutes: Routes = [
   {
@@ -62,6 +63,7 @@ const appRoutes: Routes = [
     RecipeEditComponent,
     CdkDragDropSortingExample,
     StrlenPipe,
+    RedTextDirective,
   ],
   imports: [
     BrowserModule,
