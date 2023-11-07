@@ -52,7 +52,7 @@ export class ChartComponent implements OnInit {
         type: 'time',
         time: {
           unit: 'minute',
-          tooltipFormat: 'MMMM yyyy',
+          tooltipFormat: 'HH:mm:ss',
         },
         ticks: { color: '#424242' },
       },
@@ -83,14 +83,15 @@ export class ChartComponent implements OnInit {
     const timeSinceLastDataPoint = (new Date().getTime() - ldp) / 300000;
     console.log(timeSinceLastDataPoint);
 
-    if (timeSinceLastDataPoint >= 1) {
+    if (timeSinceLastDataPoint >= 1 || ldp === undefined) {
       this.cacheOrLive = 'realtime';
       console.log('Cache is outdated, requesting new data...');
       // In case the last datapoint is older than 5 min ago, do the request
 
       // Make an HTTP request to fetch your data
       this.http.get('https://next-home-control.vercel.app/api/' + this.dataType).subscribe((data: any) => {
-        this.fullDataStore = data.slice(-this.resolution);
+        console.log('I RAN');
+        this.fullDataStore = data;
         this.fullDataStore = this.fullDataStore.map((data) => {
           const d = { ...data };
           d.dateTime = format(new Date(d.timestamp), 'dd-MM HH:mm');
@@ -99,11 +100,11 @@ export class ChartComponent implements OnInit {
 
         this.dataStore = data.map((item: any) => +item[this.dataType]);
         this.labelStore = data.map((item: any) => new Date(item.timestamp));
-        const chartData = this.dataStore.slice(-this.resolution);
+        const chartData = this.dataStore;
 
         // Update the chart data with the fetched data
         this.lineChartData.datasets[0].data = chartData;
-        this.lineChartData.labels = data.map((item: any) => new Date(item.timestamp)).slice(-this.resolution);
+        this.lineChartData.labels = data.map((item: any) => new Date(item.timestamp));
         this.lineChartData.datasets[0].label = this.dataType.toUpperCase();
         this.lineChartData.datasets[0].backgroundColor = 'rgba(' + this.color + ', 0.4)';
         this.lineChartData.datasets[0].borderColor = 'rgba(' + this.color + ', 0.5)';

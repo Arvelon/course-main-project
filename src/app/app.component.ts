@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  title: string;
   loadedFeature = 'recipe';
   data: any;
 
@@ -21,8 +22,8 @@ export class AppComponent {
 
       const duration = 30600000;
 
-      target.setHours(17);
-      target.setMinutes(10);
+      target.setHours(16);
+      target.setMinutes(40);
 
       const nowUNIX = now.getTime();
       const targetUNIX = target.getTime();
@@ -43,12 +44,14 @@ export class AppComponent {
           // (Math.floor(minutes).toString().length === 1
           //   ? '0' + Math.floor(minutes).toString()
           //   : Math.floor(minutes).toString()) +
-          ' (' + (100 - (diff / duration) * 100).toFixed(2) + '%)';
+          (100 - (diff / duration) * 100).toFixed(2) + '%';
       } else {
         format = 'Done!';
       }
 
+      this.title = format;
       this.titleService.setTitle(format);
-    }, 60000);
+      console.log(format);
+    }, 10000);
   }
 }
