@@ -18,17 +18,17 @@ export class AppComponent {
   ngOnInit() {
     setInterval(() => {
       const now = new Date();
-      const target = new Date();
+      const started = new Date();
 
-      const duration = 30600000;
+      const duration = 30600000; // 8.5h
 
-      target.setHours(16);
-      target.setMinutes(40);
+      started.setHours(8);
+      started.setMinutes(10);
 
       const nowUNIX = now.getTime();
-      const targetUNIX = target.getTime();
+      const startedUNIX = started.getTime();
 
-      const diff = targetUNIX - nowUNIX;
+      const diff = startedUNIX - nowUNIX;
 
       let format;
 
