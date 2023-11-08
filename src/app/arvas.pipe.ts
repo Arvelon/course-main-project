@@ -5,22 +5,29 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ArvasPipe implements PipeTransform {
   transform(value: string, ...args: unknown[]): unknown {
-    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    const mirrored = alphabet.split('').reverse().join('');
+    if (!value) return value;
 
-    const result = value
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    const vowels = 'aeiou';
+
+    const transformedValue = value
       .toLowerCase()
       .split('')
       .map((char) => {
-        if (char.match(/[a-z]/)) {
+        if (alphabet.includes(char)) {
           const index = alphabet.indexOf(char);
-          return mirrored[index];
+          const mirroredChar = alphabet[alphabet.length - 1 - index];
+          return char === char.toLowerCase() ? mirroredChar : mirroredChar.toUpperCase();
+        } else if (vowels.includes(char)) {
+          const index = vowels.indexOf(char);
+          const mirroredChar = vowels[vowels.length - 1 - index];
+          return char === char.toLowerCase() ? mirroredChar : mirroredChar.toUpperCase();
         } else {
           return char;
         }
       })
       .join('');
 
-    return result;
+    return transformedValue;
   }
 }

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title: string = 'abcde';
+  title: string = 'Jonas';
   loadedFeature = 'recipe';
   data: any;
 

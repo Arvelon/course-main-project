@@ -51,6 +51,7 @@ export class ShoppingListService {
 
   deleteIngredient = (index: number) => {
     this.ingredients.splice(index, 1);
+    this.save();
   };
 
   getIngredient(index: number) {
