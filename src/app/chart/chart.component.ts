@@ -12,17 +12,18 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./chart.component.css'],
 })
 export class ChartComponent implements OnInit {
-  @Input() resolution: number = 20;
-  @Input() dataType: string = '';
-  @Input() color: string = '';
-  chartType: ChartType = 'line';
-  config: FormGroup;
-  dataStore: any[];
-  labelStore: any[];
-  fullDataStore: any[];
-  cacheOrLive: string;
+  @Input() resolution: number = 20; // Number of data points to display on the chart (last-n)
+  @Input() dataType: string = ''; // Namespace of the data to display on the chart (temperature, humidity, pressure, etc.)
+  @Input() color: string = ''; // Color of the chart
+  chartType: ChartType = 'line'; // Type of chart to display (line or bar)
+  config: FormGroup; // Reactive form of the resolution and charttype props
+  dataStore: any[]; // Stores an array of values with length equal to the resolution prop
+  labelStore: any[]; // Stores an array of labels with length equal to the resolution prop
+  fullDataStore: any[]; // Stores an array of objects with length equal to the resolution prop
+  cacheOrLive: string; // 'cached' (if valid cache) or 'live' (if not)
 
   public lineChartData: ChartConfiguration<ChartType>['data'] = {
+    // Configuration for the line chart: data, labels, basic chart settings
     labels: [],
     datasets: [
       {
@@ -36,6 +37,7 @@ export class ChartComponent implements OnInit {
   };
 
   public lineChartOptions: ChartOptions<ChartType> = {
+    // More detailed chart settingd
     responsive: true,
     plugins: {
       legend: {
@@ -64,7 +66,7 @@ export class ChartComponent implements OnInit {
   };
   public lineChartLegend = true;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {} // Inject HttpClient for making HTTP requests
 
   ngOnInit(): void {
     this.config = new FormGroup({

@@ -26,6 +26,7 @@ import { StrlenPipe } from './strlen.pipe';
 import { RedTextDirective } from './red-text.directive';
 import { ProgressionComponent } from './progression/progression.component';
 import { ArvasPipe } from './arvas.pipe';
+import { AuthComponent } from './auth/auth.component';
 
 const appRoutes: Routes = [
   {
@@ -45,6 +46,10 @@ const appRoutes: Routes = [
   {
     path: 'charts',
     component: ChartsComponent,
+  },
+  {
+    path: 'auth',
+    component: AuthComponent,
   },
 ];
 
@@ -68,6 +73,7 @@ const appRoutes: Routes = [
     RedTextDirective,
     ProgressionComponent,
     ArvasPipe,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,

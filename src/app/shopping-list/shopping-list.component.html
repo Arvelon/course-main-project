@@ -1,13 +1,25 @@
-<div class="row">
-  <div class="col-xs-10">
-    <button (click)="enableEditMode()">Edit mode</button>
-    <app-shopping-edit *ngIf="editMode" (triggerClose)="closeEditMode()"></app-shopping-edit>
-    <hr>
-    <ul class="list-group">
-      <a class="list-group-item" style="cursor: pointer" *ngFor="let ingredient of ingredients; let i = index"
-        (click)="onEditItem(i)">
-        {{ ingredient.name }} ({{ ingredient.amount }}{{ingredient.unit}})
-      </a>
-    </ul>
-  </div>
+<button (click)="enableEditMode()">Edit mode</button>
+<app-shopping-edit *ngIf="editMode" (triggerClose)="closeEditMode()"></app-shopping-edit>
+<hr>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Shopping List</div>
+
+  <!-- Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Ingredient</th>
+        <th>Amount</th>
+        <th>Unit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="cursor: pointer" *ngFor="let ingredient of ingredients; let i = index" (click)="onEditItem(i)">
+        <td>{{ ingredient.name }}</td>
+        <td>{{ ingredient.amount }}</td>
+        <td>{{ ingredient.unit }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
