@@ -1,36 +1,32 @@
 import { Recipe } from '../recipes/recipe.model';
 import { Ingredient } from '../shared/ingredient.model';
 import { Subject } from 'rxjs';
+import { DataService } from './data.service';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
+@Injectable()
 export class RecipesService {
-  private recipes: Recipe[] = [
-    new Recipe(
-      1,
-      'A Test Recipe',
-      'This is simply a test',
-      'https://upload.wikimedia.org/wikipedia/commons/1/15/Recipe_logo.jpeg',
-      [new Ingredient('Bulgur', 200, 'g'), new Ingredient('Cream', 50, 'ml')]
-    ),
-    new Recipe(
-      86,
-      'Another Test Recipe',
-      'This is simply a test',
-      'https://upload.wikimedia.org/wikipedia/commons/1/15/Recipe_logo.jpeg',
-      [new Ingredient('Parmesan cheese', 30, 'g'), new Ingredient('Ricotta', 250, 'g')]
-    ),
-  ];
+  private recipes: Recipe[] = [];
   selectedRecipe = new Subject<Recipe>();
   updatedRecipes = new Subject<Recipe[]>();
+  apiUrl: string = 'https://private-project-jonas-default-rtdb.europe-west1.firebasedatabase.app/recipes.json';
 
-  constructor() {
+  constructor(private dataService: DataService, private http: HttpClient) {
     this.load();
   }
 
   addRecipe(recipe: Recipe) {
+    console.log(recipe);
     const recipeWithID = { ...recipe, id: this.recipes.length + 1 };
     this.recipes.push(recipeWithID);
     this.updatedRecipes.next(this.recipes.slice());
     this.save();
+    this.http.post(this.apiUrl, recipe).subscribe(
+      (data) => console.log(data),
+      (err) => console.log(err)
+    );
   }
 
   updateRecipe = (index: number, newRecipe: Recipe) => {
@@ -40,10 +36,26 @@ export class RecipesService {
   };
 
   getRecipes = () => {
-    return [...this.recipes];
+    return this.http.get<{ [key: string]: Recipe }>(this.apiUrl).pipe(
+      map((responseData) => {
+        const postsArray: Recipe[] = [];
+        for (const key in responseData) {
+          postsArray.push({ ...responseData[key], id: key });
+        }
+        console.log(postsArray);
+        this.recipes = postsArray;
+        return postsArray;
+      })
+    );
+    // return [...this.recipes];
   };
 
-  getRecipe = (id) => {
+  getRecipe = (id: string) => {
+    if (!this.recipes.length) return;
+    console.log(id);
+    console.log(this.recipes);
+    this.recipes.forEach((recipes) => console.log(recipes.id));
+    console.log(this.recipes.find((recipe) => recipe.id === id));
     return this.recipes.find((recipe) => recipe.id === id);
   };
 

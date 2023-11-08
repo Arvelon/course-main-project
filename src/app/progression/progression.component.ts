@@ -25,29 +25,35 @@ export class ProgressionComponent implements OnInit {
     // t.setMinutes(10);
     // localStorage.setItem('started', JSON.stringify(t.getTime()));
 
-    this.started = JSON.parse(localStorage.getItem('started'));
-    setInterval(() => {
-      const now = new Date();
-      const duration = 30600000; // 8.5h
-      const nowUNIX = now.getTime();
-      const end = this.started + duration;
-      const diff = end - nowUNIX;
+    if (localStorage.getItem('started')) {
+      this.started = JSON.parse(localStorage.getItem('started'));
 
-      console.log(diff);
-      console.log(nowUNIX);
-      console.log(this.started);
+      setInterval(() => {
+        const now = new Date();
+        const duration = 30600000; // 8.5h
+        const nowUNIX = now.getTime();
+        const end = this.started + duration;
+        const diff = end - nowUNIX;
 
-      let format;
+        // console.log(diff);
+        // console.log(nowUNIX);
+        // console.log(this.started);
 
-      if (diff > 0) {
-        format = (100 - (diff / duration) * 100).toFixed(2) + '%';
-      } else {
-        format = 'Done!';
-      }
+        let format;
 
-      this.title = format;
-      this.titleService.setTitle(format);
-      console.log(format);
-    }, 10000);
+        if (diff > 0) {
+          format = (100 - (diff / duration) * 100).toFixed(2) + '%';
+        } else {
+          console.log('DIFF', diff);
+          format = 'Done!';
+        }
+
+        this.title = format;
+        this.titleService.setTitle(format);
+        console.log(format);
+      }, 10000);
+    } else {
+      this.titleService.setTitle('No start time registered!');
+    }
   }
 }

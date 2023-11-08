@@ -10,7 +10,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
   styleUrls: ['./recipe-edit.component.css'],
 })
 export class RecipeEditComponent implements OnInit {
-  id: number;
+  id: string;
   recipe: Recipe;
   editMode: boolean = false;
   recipeForm: FormGroup;
@@ -19,9 +19,9 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.recipe = this.recipeService.getRecipe(+params.id);
+      this.recipe = this.recipeService.getRecipe(params.id);
       console.log(this.recipe);
-      this.id = +params.id;
+      this.id = params.id;
       this.editMode = params.id != null;
       this.initForm();
     });
@@ -81,7 +81,7 @@ export class RecipeEditComponent implements OnInit {
     if (this.editMode) {
       // Update
       console.log('onSave', this.recipeForm.value);
-      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+      // this.recipeService.updateRecipe(this.id, this.recipeForm.value); // COVER
     } else {
       // Create
       this.recipeService.addRecipe(this.recipeForm.value);
@@ -94,7 +94,7 @@ export class RecipeEditComponent implements OnInit {
   onDelete = () => this.recipeService.deleteRecipe(this.id);
 
   onDeleteIngredient = (index: number) => {
-    this.recipeService.deleteIngredient(this.id, index);
+    // this.recipeService.deleteIngredient(this.id, index); // COVER
     (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
   };
 }
