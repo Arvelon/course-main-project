@@ -25,6 +25,7 @@ import { RecipesService } from './services/recipes.service';
 import { StrlenPipe } from './strlen.pipe';
 import { RedTextDirective } from './red-text.directive';
 import { ProgressionComponent } from './progression/progression.component';
+import { ArvasPipe } from './arvas.pipe';
 
 const appRoutes: Routes = [
   {
@@ -66,6 +67,7 @@ const appRoutes: Routes = [
     StrlenPipe,
     RedTextDirective,
     ProgressionComponent,
+    ArvasPipe,
   ],
   imports: [
     BrowserModule,

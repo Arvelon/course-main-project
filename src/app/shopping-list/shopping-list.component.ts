@@ -17,6 +17,7 @@ export class ShoppingListComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.ingredients = this.shoppingListService.ingredients;
+    this.shoppingListService.fetchList().subscribe((data) => (this.ingredients = data));
     this.editMode = this.shoppingListService.editMode;
   }
 

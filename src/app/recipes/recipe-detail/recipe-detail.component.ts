@@ -23,9 +23,7 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      console.log(params.id);
       this.recipe = this.recipeService.getRecipe(params.id);
-      console.log(this.recipe);
     });
   }
 
